@@ -16,82 +16,6 @@ import numpy as np
 import os
 ```
 
-
-
-
-<style>
-blockquote { background: #AEDE94; }
-h1 { 
-    padding-top: 25px;
-    padding-bottom: 25px;
-    text-align: left; 
-    padding-left: 10px;
-    background-color: #DDDDDD; 
-    color: black;
-}
-h2 { 
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: left; 
-    padding-left: 5px;
-    background-color: #EEEEEE; 
-    color: black;
-}
-
-div.exercise {
-	background-color: #ffcccc;
-	border-color: #E9967A; 	
-	border-left: 5px solid #800080; 
-	padding: 0.5em;
-}
-
-div.exercise-r {
-	background-color: #fce8e8;
-	border-color: #E9967A; 	
-	border-left: 5px solid #800080; 
-	padding: 0.5em;
-}
-
-
-span.sub-q {
-	font-weight: bold;
-}
-div.theme {
-	background-color: #DDDDDD;
-	border-color: #E9967A; 	
-	border-left: 5px solid #800080; 
-	padding: 0.5em;
-	font-size: 18pt;
-}
-div.gc { 
-	background-color: #AEDE94;
-	border-color: #E9967A; 	 
-	border-left: 5px solid #800080; 
-	padding: 0.5em;
-	font-size: 12pt;
-}
-p.q1 { 
-    padding-top: 5px;
-    padding-bottom: 5px;
-    text-align: left; 
-    padding-left: 5px;
-    background-color: #EEEEEE; 
-    color: black;
-}
-header {
-   padding-top: 35px;
-    padding-bottom: 35px;
-    text-align: left; 
-    padding-left: 10px;
-    background-color: #DDDDDD; 
-    color: black;
-}
-</style>
-
-
-
-
-
 # Tasks
 
 - Read pages 17-48 in the textbook, Bressoud and White.
@@ -116,8 +40,19 @@ When you reach the end of your rope, tie a knot in it and hang on.</code>
 
 
 ```python
+f_p = '/Users/rahmasemma/Documents/GitHub/Data200_Fall23/homework/hw1/data/quotes.txt'
 
+try:
+    with open(f_p, 'r') as file:
+        f1 = file.readline()
+        print(f1)
+except FileNotFoundError:
+    print(f'File not found.')
 ```
+
+    When you reach the end of your rope, tie a knot in it and hang on.
+    
+
 
 <div class="exercise"><b>Exercise 2</b></div> 
 
@@ -144,8 +79,28 @@ Lao Tzu</code>
 
 
 ```python
-
+try:
+    with open(f_p, 'r') as file:
+        lines = file.readlines()
+        
+        for line in lines:
+            print(line.strip())
+            
+except FileNotFoundError:
+    print(f'File not found.')
 ```
+
+    When you reach the end of your rope, tie a knot in it and hang on.
+    Franklin D. Roosevelt
+    Always remember that you are absolutely unique. Just like everyone else.
+    Margaret Mead
+    The best and most beautiful things in the world cannot be seen or even touched — they must be felt with the heart.
+    Helen Keller
+    Success depends upon previous preparation, and without such preparation, there is sure to be failure.
+    Confucius
+    The journey of a thousand miles begins with one step.
+    Lao Tzu
+
 
 Run the cell below that defines a few `string` variables.
 
@@ -172,8 +127,16 @@ shake</code>
 
 
 ```python
+pick_s1 = s1.split()
+pick_s2 = s2.split()
 
+print(pick_s1[4])
+print(pick_s2[8])
 ```
+
+    Applebee's
+    shake
+
 
 <div class="exercise"><b>Exercise 4</b></div> 
 
@@ -189,8 +152,21 @@ The number of words is 85</code>
 
 
 ```python
-
+try:
+    with open(f_p,'r') as file:
+        ax = file.read()
+        s_t = ax.split()
+        n_l = len(s_t)
+        
+        print("The number of words is",n_l)
+        
+except FileNotFoundError:
+    
+    print(f'File not found.')
 ```
+
+    The number of words is 85
+
 
 <div class="exercise"><b>Exercise 5</b></div> 
 
@@ -202,8 +178,33 @@ The output from my solution is:<br>
 
 
 ```python
+try:
+    with open(f_p, 'r') as file:
+        line_n = 1  
+        l_list = []  
+        
+        for line in file:
+            words = line.split()
 
+            n_w = len(words)
+
+            l_info = (line_n, n_w)
+
+            l_list.append(l_info)
+
+            line_n += 1
+            
+            list_of_lists = [[line_n, n_w] for line_n, n_w in l_list]
+
+#         for item in list_of_lists:
+        print(list_of_lists)
+
+except FileNotFoundError:
+    print(f'File not found.')
 ```
+
+    [[1, 16], [2, 3], [3, 11], [4, 2], [5, 23], [6, 2], [7, 15], [8, 1], [9, 10], [10, 2]]
+
 
 <div class="exercise"><b>Exercise 6</b></div> 
 
@@ -211,8 +212,37 @@ Write a function `numWordsPerLine(filepath)` that processes the file as in **Exe
 
 
 ```python
+def numWordsPerLine(f_p):
+    try:
+       
+        with open(f_p, 'r') as file:
+            line_number = 1  
+            line_info_list = []  
 
+            
+            for line in file:
+                
+                words = line.split()
+
+                num_words = len(words)
+
+                line_info = (line_number, num_words)
+
+                line_info_list.append(line_info)
+
+        
+                line_number += 1
+
+            return line_info_list
+
+    except FileNotFoundError:
+        print(f'File not found: {filepath}')
+        return []
+print(numWordsPerLine(f_p))
 ```
+
+    [(1, 16), (2, 3), (3, 11), (4, 2), (5, 23), (6, 2), (7, 15), (8, 1), (9, 10), (10, 2)]
+
 
 Let's now get some practice using the `os.path.join(.)` method.  Run the following code cell
 
@@ -233,8 +263,15 @@ The output from my solution is:<br>
 
 
 ```python
+f_p = os.path.join(datadir, "SummerDay.txt")
 
+code = numWordsPerLine(f_p)
+
+print(code)
 ```
+
+    [(1, 8), (2, 7), (3, 9), (4, 9), (5, 8), (6, 7), (7, 7), (8, 7), (9, 7), (10, 8), (11, 9), (12, 8), (13, 10), (14, 10)]
+
 
 <div class="exercise"><b>Exercise 8</b></div> 
 
@@ -262,14 +299,42 @@ The output from my solution is:<br>
 
 
 ```python
-def readNamesCounts(filepath):
+def readNamesCounts(f_p):
     namelist = []
     countlist = []
     ## FINISH THE FUNCTION HERE
-    
+    with open(f_p, 'r') as file:
+        for line in file:
+            line = line.strip()  
+            count, name = line.split(',') 
+            count = int(count.strip())  
+            name = name.strip()  
+            namelist.append(name)
+            countlist.append(count)
 
-filepath = os.path.join(datadir, "babyNames.txt")
+    return namelist, countlist
+
+# Usage example:
+f_p = "/Users/rahmasemma/Documents/GitHub/Data200_Fall23/homework/hw1/data/babyNames.txt"  # Replace with the actual path to your file
+namelist, countlist = readNamesCounts(filepath)
+
+# You can print or use namelist and countlist as needed
+#print(namelist)
+#print(countlist)
+
+f_p = os.path.join(datadir, "babyNames.txt")
 namelist, countlist = readNamesCounts(filepath)
 print(namelist)
 print(countlist)
 ```
+
+    ['Jacob', 'Ethan', 'Michael', 'Jayden', 'William', 'Alexander']
+    [22127, 18002, 17350, 17179, 17051, 16756]
+
+
+
+```python
+
+```
+
+
